@@ -750,11 +750,18 @@ sub council_rss_alert_options {
         }
     }
 
+    my $council_text;
+    if ( $c->cobrand->is_council ) {
+        $council_text = 'All problems within the council';
+    } else {
+        $council_text = sprintf( _('Problems within %s'), $council->{name});
+    }
+
     push @options,
       {
         type      => 'council',
         id        => sprintf( 'council:%s:%s', $council->{id}, $council->{id_name} ),
-        text      => sprintf( _('Problems within %s'), $council->{name}),
+        text      => $council_text,
         rss_text  => sprintf( _('RSS feed of problems within %s'), $council->{name}),
         uri       => $c->uri_for( '/rss/reports/' . $council->{short_name} ),
       };
@@ -766,6 +773,7 @@ sub council_rss_alert_options {
         text     => sprintf( _('Problems within %s ward'), $ward->{name}),
         uri      => $c->uri_for( '/rss/reports/' . $council->{short_name} . '/' . $ward->{short_name} ),
       } if $ward;
+
     } elsif ( $num_councils == 4 ) {
 #        # Two-tier council
       my ($county, $district, $c_ward, $d_ward);
