@@ -53,7 +53,11 @@ Modernizr.load({
             <li>[% question %]</li>
             <li>[% loc('Locate the problem on a map of the area') %]</li>
             <li>[% loc('Enter details of the problem') %]</li>
-            <li>[% loc('We send it to the council on your behalf') %]</li>
+            [% IF c.cobrand.is_council %]
+                <li>Confirm the report and [% c.cobrand.council_name %] will investigate</li>
+            [% ELSE %]
+                <li>[% loc('We send it to the council on your behalf') %]</li>
+            [% END %]
         </ol>
         
         <section class="full-width">
